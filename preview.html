@@ -1107,7 +1107,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 <dialog id="krygina-lightbox" aria-label="Фотопроект KRYGINA CONCRETE"><div class="gallery-shell"><div class="gallery-header"><span>KRYGINA — CONCRETE <span style="color:#a99176">/ CONCEPT CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/krygina-concrete/1.png" alt="KRYGINA CONCRETE — кадр рекламной кампании"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('krygina-lightbox'),open=document.querySelector('[data-still-project="krygina"] .still-project-open');if(!dialog||!open)return;
-const images=['1.png','2.png','3.jpg','4.jpg','5.jpg'].map(name=>'portfolio/krygina-concrete/'+name);
+const images=['1.png','2.png','3.jpg','5.jpg','4.jpg'].map(name=>'portfolio/krygina-concrete/'+name);
 const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
 function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='KRYGINA CONCRETE — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 05';}
 open.addEventListener('click',()=>{show(0);dialog.showModal()});
