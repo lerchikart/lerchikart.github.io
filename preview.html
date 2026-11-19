@@ -879,6 +879,17 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 #befree-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
 #befree-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
 @media(max-width:600px){#befree-lightbox .gallery-shell{padding:15px 9px}#befree-lightbox .gallery-image{max-width:calc(100vw - 100px)}#befree-lightbox .gallery-nav{flex-basis:36px;height:36px}}
+
+#diamond-lightbox{border:0;padding:0;max-width:none;max-height:none;width:100vw;height:100dvh;background:rgba(8,7,8,.97);color:#f1e9dd}
+#diamond-lightbox::backdrop{background:rgba(0,0,0,.95)}
+#diamond-lightbox .gallery-shell{height:100%;display:flex;flex-direction:column;align-items:center;padding:22px 24px;box-sizing:border-box}
+#diamond-lightbox .gallery-header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:12px Arial,sans-serif;letter-spacing:.12em}
+#diamond-lightbox .gallery-close{border:1px solid #6d6056;background:transparent;color:#f1e9dd;border-radius:50%;width:42px;height:42px;font-size:25px;cursor:pointer}
+#diamond-lightbox .gallery-stage{width:100%;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:15px}
+#diamond-lightbox .gallery-image{max-width:min(76vw,1200px);max-height:calc(100dvh - 155px);object-fit:contain}
+#diamond-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
+#diamond-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
+@media(max-width:600px){#diamond-lightbox .gallery-shell{padding:15px 9px}#diamond-lightbox .gallery-image{max-width:calc(100vw - 100px)}#diamond-lightbox .gallery-nav{flex-basis:36px;height:36px}}
 </style>
 </head>
 <body>
@@ -986,6 +997,13 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">FASHION EDITORIAL / 02</div><h3 class="still-project-title">BEFREE — SILVER</h3><p class="still-project-subtitle">Концептуальная fashion-кампания · 7 изображений</p>
+</article>
+<article class="still-card still-project" data-still-category="product editorial" data-still-project="diamond" data-ready="0" hidden>
+<button class="still-project-open" type="button" aria-label="Открыть фотопроект DIAMOND LIGHT STUDY">
+<img src="portfolio/diamond-light-study/1.jpg" alt="DIAMOND LIGHT STUDY — ювелирная рекламная кампания" loading="lazy">
+<span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
+</button>
+<div class="still-meta">JEWELRY CAMPAIGN / 03</div><h3 class="still-project-title">DIAMOND — LIGHT STUDY</h3><p class="still-project-subtitle">Концептуальная ювелирная кампания · 6 изображений</p>
 </article>
 </div><div class="stills-hint">Выберите проект, чтобы посмотреть всю серию →</div></div></section>
 <section class="section content-section" id="services"><div class="container"><div class="section-tag">04 / EXPERTISE</div><h2 class="section-title display-heading">ОТ ИДЕИ ДО ФИНАЛЬНОГО КАДРА.</h2><div class="expertise-showcase"><article class="expertise-tile wide"><div class="expertise-media" aria-hidden="true"><span class="expertise-media-label">VIDEO PREVIEW / 01</span></div><div class="expertise-copy"><span class="expertise-number">01 /</span><h3>РЕКЛАМНЫЕ РОЛИКИ</h3><p>Видеореклама продуктов и брендов для digital-площадок, социальных сетей и рекламных кампаний.</p></div></article>
@@ -1112,7 +1130,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 (()=>{const el=document.getElementById('typingText');if(!el)return;const phrases=['Рекламные ролики','Имиджевые видео','Продуктовая реклама','Анимация','AI-визуал'];if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=phrases.join(' / ');return;}let i=0,n=phrases[0].length,back=true;function tick(){const word=phrases[i];el.textContent=word.slice(0,n);if(back){if(n>0){n--;setTimeout(tick,40);}else{back=false;i=(i+1)%phrases.length;setTimeout(tick,300);}}else{const next=phrases[i];if(n<next.length){n++;setTimeout(tick,75);}else{back=true;setTimeout(tick,1700);}}}setTimeout(tick,1800);})();
 </script>
 <script>
-(()=>{const root=document.getElementById('stills');if(!root)return;const track=root.querySelector('.stills-track'),cards=[...root.querySelectorAll('.still-card')],buttons=[...root.querySelectorAll('[data-still-filter]')],prev=root.querySelector('[data-still-prev]'),next=root.querySelector('[data-still-next]');function update(){prev.disabled=track.scrollLeft<5;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-5;}buttons.forEach(btn=>btn.addEventListener('click',()=>{const category=btn.dataset.stillFilter;buttons.forEach(b=>{const active=b===btn;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});cards.forEach(card=>card.hidden=category!=='all'&&!card.dataset.stillCategory.split(' ').includes(category));track.scrollLeft=0;requestAnimationFrame(update);}));function step(dir){const visible=cards.find(c=>!c.hidden);if(!visible)return;track.scrollBy({left:dir*(visible.getBoundingClientRect().width+16),behavior:'smooth'});}prev.addEventListener('click',()=>step(-1));next.addEventListener('click',()=>step(1));track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();})();
+(()=>{const root=document.getElementById('stills');if(!root)return;const track=root.querySelector('.stills-track'),cards=[...root.querySelectorAll('.still-card')],buttons=[...root.querySelectorAll('[data-still-filter]')],prev=root.querySelector('[data-still-prev]'),next=root.querySelector('[data-still-next]');function update(){prev.disabled=track.scrollLeft<5;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-5;}buttons.forEach(btn=>btn.addEventListener('click',()=>{const category=btn.dataset.stillFilter;buttons.forEach(b=>{const active=b===btn;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});cards.forEach(card=>card.hidden=card.dataset.ready==='0'||(category!=='all'&&!card.dataset.stillCategory.split(' ').includes(category)));track.scrollLeft=0;requestAnimationFrame(update);}));function step(dir){const visible=cards.find(c=>!c.hidden);if(!visible)return;track.scrollBy({left:dir*(visible.getBoundingClientRect().width+16),behavior:'smooth'});}prev.addEventListener('click',()=>step(-1));next.addEventListener('click',()=>step(1));track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();})();
 </script>
 <script>
 (()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;let pending=false;function moveGlow(){pending=false;const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);const progress=Math.min(1,Math.max(0,scrollY/max));const x=52+28*Math.sin(progress*Math.PI*3.2+0.8);const y=35+22*Math.cos(progress*Math.PI*4.1);document.body.style.setProperty('--glow-x',x.toFixed(1)+'%');document.body.style.setProperty('--glow-y',y.toFixed(1)+'%');}addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(moveGlow)}},{passive:true});addEventListener('resize',moveGlow);moveGlow()})();
@@ -1149,6 +1167,23 @@ dialog.querySelector('[data-gallery-next]').addEventListener('click',()=>show(in
 dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
 dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.key==='ArrowRight')show(index+1)});
 let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
+})();
+</script>
+
+<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
+<script>
+(()=>{const dialog=document.getElementById('diamond-lightbox'),card=document.querySelector('[data-still-project="diamond"]'),open=card?.querySelector('.still-project-open');if(!dialog||!open)return;
+const images=Array.from({length:6},(_,i)=>'portfolio/diamond-light-study/'+(i+1)+'.jpg');
+const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
+function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='DIAMOND LIGHT STUDY — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 06';}
+open.addEventListener('click',()=>{show(0);dialog.showModal()});
+dialog.querySelector('.gallery-close').addEventListener('click',()=>dialog.close());
+dialog.querySelector('[data-gallery-prev]').addEventListener('click',()=>show(index-1));
+dialog.querySelector('[data-gallery-next]').addEventListener('click',()=>show(index+1));
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.key==='ArrowRight')show(index+1)});
+let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
+const probe=new Image();probe.onload=()=>{card.dataset.ready='1';const category=document.querySelector('#stills .stills-filter.active')?.dataset.stillFilter||'all';card.hidden=category!=='all'&&!card.dataset.stillCategory.split(' ').includes(category);};probe.src=images[0];
 })();
 </script>
 </body>
