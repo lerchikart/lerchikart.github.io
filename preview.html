@@ -869,6 +869,16 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 #krygina-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
 #krygina-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
 @media(max-width:600px){#krygina-lightbox .gallery-shell{padding:15px 9px}#krygina-lightbox .gallery-image{max-width:calc(100vw - 100px)}#krygina-lightbox .gallery-nav{flex-basis:36px;height:36px}}
+#befree-lightbox{border:0;padding:0;max-width:none;max-height:none;width:100vw;height:100dvh;background:rgba(8,7,8,.97);color:#f1e9dd}
+#befree-lightbox::backdrop{background:rgba(0,0,0,.95)}
+#befree-lightbox .gallery-shell{height:100%;display:flex;flex-direction:column;align-items:center;padding:22px 24px;box-sizing:border-box}
+#befree-lightbox .gallery-header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:12px Arial,sans-serif;letter-spacing:.12em}
+#befree-lightbox .gallery-close{border:1px solid #6d6056;background:transparent;color:#f1e9dd;border-radius:50%;width:42px;height:42px;font-size:25px;cursor:pointer}
+#befree-lightbox .gallery-stage{width:100%;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:15px}
+#befree-lightbox .gallery-image{max-width:min(76vw,1200px);max-height:calc(100dvh - 155px);object-fit:contain}
+#befree-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
+#befree-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
+@media(max-width:600px){#befree-lightbox .gallery-shell{padding:15px 9px}#befree-lightbox .gallery-image{max-width:calc(100vw - 100px)}#befree-lightbox .gallery-nav{flex-basis:36px;height:36px}}
 </style>
 </head>
 <body>
@@ -969,6 +979,13 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">BEAUTY CAMPAIGN / 01</div><h3 class="still-project-title">KRYGINA — CONCRETE</h3><p class="still-project-subtitle">Концептуальная AI-кампания · 5 изображений</p>
+</article>
+<article class="still-card still-project" data-still-category="fashion" data-still-project="befree">
+<button class="still-project-open" type="button" aria-label="Открыть фотопроект BEFREE SILVER">
+<img src="portfolio/befree-silver/1.jpg" alt="BEFREE SILVER — fashion editorial" loading="lazy">
+<span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
+</button>
+<div class="still-meta">FASHION EDITORIAL / 02</div><h3 class="still-project-title">BEFREE — SILVER</h3><p class="still-project-subtitle">Концептуальная fashion-кампания · 7 изображений</p>
 </article>
 </div><div class="stills-hint">Выберите проект, чтобы посмотреть всю серию →</div></div></section>
 <section class="section content-section" id="services"><div class="container"><div class="section-tag">04 / EXPERTISE</div><h2 class="section-title display-heading">ОТ ИДЕИ ДО ФИНАЛЬНОГО КАДРА.</h2><div class="expertise-showcase"><article class="expertise-tile wide"><div class="expertise-media" aria-hidden="true"><span class="expertise-media-label">VIDEO PREVIEW / 01</span></div><div class="expertise-copy"><span class="expertise-number">01 /</span><h3>РЕКЛАМНЫЕ РОЛИКИ</h3><p>Видеореклама продуктов и брендов для digital-площадок, социальных сетей и рекламных кампаний.</p></div></article>
@@ -1110,6 +1127,21 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 const images=['1.png','2.png','3.jpg','5.jpg','4.jpg'].map(name=>'portfolio/krygina-concrete/'+name);
 const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
 function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='KRYGINA CONCRETE — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 05';}
+open.addEventListener('click',()=>{show(0);dialog.showModal()});
+dialog.querySelector('.gallery-close').addEventListener('click',()=>dialog.close());
+dialog.querySelector('[data-gallery-prev]').addEventListener('click',()=>show(index-1));
+dialog.querySelector('[data-gallery-next]').addEventListener('click',()=>show(index+1));
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.key==='ArrowRight')show(index+1)});
+let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
+})();
+</script>
+<dialog id="befree-lightbox" aria-label="Фотопроект BEFREE SILVER"><div class="gallery-shell"><div class="gallery-header"><span>BEFREE — SILVER <span style="color:#a99176">/ FASHION EDITORIAL</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/befree-silver/1.jpg" alt="BEFREE SILVER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КОНЦЕПТУАЛЬНАЯ FASHION-КАМПАНИЯ</div></div></dialog>
+<script>
+(()=>{const dialog=document.getElementById('befree-lightbox'),open=document.querySelector('[data-still-project="befree"] .still-project-open');if(!dialog||!open)return;
+const images=Array.from({length:7},(_,i)=>'portfolio/befree-silver/'+(i+1)+'.jpg');
+const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
+function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='BEFREE SILVER — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 07';}
 open.addEventListener('click',()=>{show(0);dialog.showModal()});
 dialog.querySelector('.gallery-close').addEventListener('click',()=>dialog.close());
 dialog.querySelector('[data-gallery-prev]').addEventListener('click',()=>show(index-1));
