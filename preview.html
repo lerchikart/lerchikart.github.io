@@ -1000,7 +1000,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 </article>
 <article class="still-card still-project" data-still-category="product editorial" data-still-project="diamond" data-ready="0" hidden>
 <button class="still-project-open" type="button" aria-label="Открыть фотопроект DIAMOND LIGHT STUDY">
-<img src="portfolio/diamond-light-study/1.jpg" alt="DIAMOND LIGHT STUDY — ювелирная рекламная кампания" loading="lazy">
+<img src="portfolio/diamond-light-study/1.jpeg" alt="DIAMOND LIGHT STUDY — ювелирная рекламная кампания" loading="lazy">
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">JEWELRY CAMPAIGN / 03</div><h3 class="still-project-title">DIAMOND — LIGHT STUDY</h3><p class="still-project-subtitle">Концептуальная ювелирная кампания · 6 изображений</p>
@@ -1170,10 +1170,10 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
+<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpeg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('diamond-lightbox'),card=document.querySelector('[data-still-project="diamond"]'),open=card?.querySelector('.still-project-open');if(!dialog||!open)return;
-const images=Array.from({length:6},(_,i)=>'portfolio/diamond-light-study/'+(i+1)+'.jpg');
+const images=['1.jpeg','2.png','3.jpeg','4.jpeg','5.jpeg','6.jpeg'].map(name=>'portfolio/diamond-light-study/'+name);
 const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
 function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='DIAMOND LIGHT STUDY — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 06';}
 open.addEventListener('click',()=>{show(0);dialog.showModal()});
