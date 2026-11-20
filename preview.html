@@ -1093,7 +1093,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 </article>
 <article class="still-card still-project" data-still-category="product editorial" data-still-project="sunlight">
 <button class="still-project-open" type="button" aria-label="Открыть новогоднюю ювелирную серию SUNLIGHT FESTIVE COLLECTION">
-<img src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT — FESTIVE COLLECTION, новогодняя ювелирная AI-серия" loading="lazy">
+<img src="portfolio/sunlight-festive-collection/1.png" alt="SUNLIGHT — FESTIVE COLLECTION, новогодняя ювелирная AI-серия" loading="lazy">
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">JEWELRY EDITORIAL / 09</div><h3 class="still-project-title">SUNLIGHT — FESTIVE COLLECTION</h3><p class="still-project-subtitle">Неофициальная новогодняя AI-концепция · 5 изображений</p>
@@ -1362,10 +1362,10 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/1.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 04</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
+<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 04</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('sunlight-lightbox'),open=document.querySelector('[data-still-project="sunlight"] .still-project-open');if(!dialog||!open)return;
-const images=['1.png','2.png','3.png','4.png'].map(name=>'portfolio/sunlight-festive-collection/'+name);
+const images=['5.png','2.png','3.png','4.png'].map(name=>'portfolio/sunlight-festive-collection/'+name);
 const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
 function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='SUNLIGHT FESTIVE COLLECTION — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 04';}
 open.addEventListener('click',()=>{show(0);dialog.showModal()});
