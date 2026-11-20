@@ -930,6 +930,16 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 #ecommerce-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
 #ecommerce-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
 @media(max-width:600px){#ecommerce-lightbox .gallery-shell{padding:15px 9px}#ecommerce-lightbox .gallery-image{max-width:calc(100vw - 100px)}#ecommerce-lightbox .gallery-nav{flex-basis:36px;height:36px}}
+#sunlight-lightbox{border:0;padding:0;max-width:none;max-height:none;width:100vw;height:100dvh;background:rgba(8,7,8,.97);color:#f1e9dd}
+#sunlight-lightbox::backdrop{background:rgba(0,0,0,.95)}
+#sunlight-lightbox .gallery-shell{height:100%;display:flex;flex-direction:column;align-items:center;padding:22px 24px;box-sizing:border-box}
+#sunlight-lightbox .gallery-header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:12px Arial,sans-serif;letter-spacing:.12em}
+#sunlight-lightbox .gallery-close{border:1px solid #6d6056;background:transparent;color:#f1e9dd;border-radius:50%;width:42px;height:42px;font-size:25px;cursor:pointer}
+#sunlight-lightbox .gallery-stage{width:100%;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:15px}
+#sunlight-lightbox .gallery-image{max-width:min(76vw,1200px);max-height:calc(100dvh - 155px);object-fit:contain}
+#sunlight-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
+#sunlight-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
+@media(max-width:600px){#sunlight-lightbox .gallery-shell{padding:15px 9px}#sunlight-lightbox .gallery-image{max-width:calc(100vw - 100px)}#sunlight-lightbox .gallery-nav{flex-basis:36px;height:36px}}
 </style>
 </head>
 <body>
@@ -1080,6 +1090,13 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">FASHION E-COMMERCE / 08</div><h3 class="still-project-title">FASHION — E-COMMERCE</h3><p class="still-project-subtitle">Коммерческая AI-съёмка для маркетплейса · 6 изображений</p>
+</article>
+<article class="still-card still-project" data-still-category="product editorial" data-still-project="sunlight">
+<button class="still-project-open" type="button" aria-label="Открыть новогоднюю ювелирную серию SUNLIGHT FESTIVE COLLECTION">
+<img src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT — FESTIVE COLLECTION, новогодняя ювелирная AI-серия" loading="lazy">
+<span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
+</button>
+<div class="still-meta">JEWELRY EDITORIAL / 09</div><h3 class="still-project-title">SUNLIGHT — FESTIVE COLLECTION</h3><p class="still-project-subtitle">Неофициальная новогодняя AI-концепция · 5 изображений</p>
 </article>
 </div><div class="stills-hint">Выберите проект, чтобы посмотреть всю серию →</div></div></section>
 <section class="section content-section" id="services"><div class="container"><div class="section-tag">04 / EXPERTISE</div><h2 class="section-title display-heading">ОТ ИДЕИ ДО ФИНАЛЬНОГО КАДРА.</h2><div class="expertise-showcase"><article class="expertise-tile wide"><div class="expertise-media" aria-hidden="true"><span class="expertise-media-label">VIDEO PREVIEW / 01</span></div><div class="expertise-copy"><span class="expertise-number">01 /</span><h3>РЕКЛАМНЫЕ РОЛИКИ</h3><p>Видеореклама продуктов и брендов для digital-площадок, социальных сетей и рекламных кампаний.</p></div></article>
@@ -1345,6 +1362,22 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
+<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/1.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 04</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
+<script>
+(()=>{const dialog=document.getElementById('sunlight-lightbox'),open=document.querySelector('[data-still-project="sunlight"] .still-project-open');if(!dialog||!open)return;
+const images=['1.png','2.png','3.png','4.png'].map(name=>'portfolio/sunlight-festive-collection/'+name);
+const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
+function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='SUNLIGHT FESTIVE COLLECTION — кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / 04';}
+open.addEventListener('click',()=>{show(0);dialog.showModal()});
+dialog.querySelector('.gallery-close').addEventListener('click',()=>dialog.close());
+dialog.querySelector('[data-gallery-prev]').addEventListener('click',()=>show(index-1));
+dialog.querySelector('[data-gallery-next]').addEventListener('click',()=>show(index+1));
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.key==='ArrowRight')show(index+1)});
+let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
+})();
+</script>
+
 <!-- Restore page scroll after closing any photo gallery -->
 <script>
 (()=>{
@@ -1356,7 +1389,8 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
     ['befree','befree-lightbox'],
     ['jagermeister','jagermeister-lightbox'],
     ['sakhalin','sakhalin-lightbox'],
-    ['ecommerce','ecommerce-lightbox']
+    ['ecommerce','ecommerce-lightbox'],
+    ['sunlight','sunlight-lightbox']
   ];
   galleries.forEach(([project,id])=>{
     const dialog=document.getElementById(id);
