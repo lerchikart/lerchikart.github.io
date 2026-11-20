@@ -890,6 +890,16 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 #diamond-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
 #diamond-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
 @media(max-width:600px){#diamond-lightbox .gallery-shell{padding:15px 9px}#diamond-lightbox .gallery-image{max-width:calc(100vw - 100px)}#diamond-lightbox .gallery-nav{flex-basis:36px;height:36px}}
+#jagermeister-lightbox{border:0;padding:0;max-width:none;max-height:none;width:100vw;height:100dvh;background:rgba(8,7,8,.97);color:#f1e9dd}
+#jagermeister-lightbox::backdrop{background:rgba(0,0,0,.95)}
+#jagermeister-lightbox .gallery-shell{height:100%;display:flex;flex-direction:column;align-items:center;padding:22px 24px;box-sizing:border-box}
+#jagermeister-lightbox .gallery-header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:12px Arial,sans-serif;letter-spacing:.12em}
+#jagermeister-lightbox .gallery-close{border:1px solid #6d6056;background:transparent;color:#f1e9dd;border-radius:50%;width:42px;height:42px;font-size:25px;cursor:pointer}
+#jagermeister-lightbox .gallery-stage{width:100%;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:15px}
+#jagermeister-lightbox .gallery-image{max-width:min(76vw,1200px);max-height:calc(100dvh - 155px);object-fit:contain}
+#jagermeister-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
+#jagermeister-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
+@media(max-width:600px){#jagermeister-lightbox .gallery-shell{padding:15px 9px}#jagermeister-lightbox .gallery-image{max-width:calc(100vw - 100px)}#jagermeister-lightbox .gallery-nav{flex-basis:36px;height:36px}}
 </style>
 </head>
 <body>
