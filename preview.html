@@ -1219,5 +1219,40 @@ dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.
 let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
 })();
 </script>
+
+<!-- Restore page scroll after closing any photo gallery -->
+<script>
+(()=>{
+  const galleries=[
+    ['krygina','krygina-lightbox'],
+    ['diamond','diamond-lightbox'],
+    ['befree','befree-lightbox'],
+    ['jagermeister','jagermeister-lightbox']
+  ];
+  galleries.forEach(([project,id])=>{
+    const dialog=document.getElementById(id);
+    const trigger=document.querySelector('[data-still-project="'+project+'"] .still-project-open');
+    if(!dialog||!trigger)return;
+    let previousX=0,previousY=0;
+    trigger.addEventListener('click',()=>{
+      previousX=window.scrollX;
+      previousY=window.scrollY;
+    },{capture:true});
+    dialog.addEventListener('close',()=>{
+      const html=document.documentElement;
+      const previousBehavior=html.style.scrollBehavior;
+      html.style.scrollBehavior='auto';
+      window.scrollTo(previousX,previousY);
+      requestAnimationFrame(()=>{
+        window.scrollTo(previousX,previousY);
+        requestAnimationFrame(()=>{
+          window.scrollTo(previousX,previousY);
+          html.style.scrollBehavior=previousBehavior;
+        });
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
