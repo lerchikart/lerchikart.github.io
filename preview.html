@@ -1064,6 +1064,13 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 </button>
 <div class="still-meta">PAPER-CUT ANIMATION / 07</div><h3 class="still-project-title">САХАЛИН — PAPER CUT ANIMATION</h3><p class="still-project-subtitle">Кадры из анимационного ролика для ресторана · 7 изображений</p>
 </article>
+<article class="still-card still-project" data-still-category="fashion product" data-still-project="ecommerce">
+<button class="still-project-open" type="button" aria-label="Открыть коммерческую fashion-съёмку для маркетплейса">
+<img src="portfolio/fashion-ecommerce/1.jpg" alt="FASHION — E-COMMERCE, коммерческая съёмка спортивного костюма" loading="lazy">
+<span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
+</button>
+<div class="still-meta">FASHION E-COMMERCE / 08</div><h3 class="still-project-title">FASHION — E-COMMERCE</h3><p class="still-project-subtitle">Коммерческая AI-съёмка для маркетплейса · 6 изображений</p>
+</article>
 </div><div class="stills-hint">Выберите проект, чтобы посмотреть всю серию →</div></div></section>
 <section class="section content-section" id="services"><div class="container"><div class="section-tag">04 / EXPERTISE</div><h2 class="section-title display-heading">ОТ ИДЕИ ДО ФИНАЛЬНОГО КАДРА.</h2><div class="expertise-showcase"><article class="expertise-tile wide"><div class="expertise-media" aria-hidden="true"><span class="expertise-media-label">VIDEO PREVIEW / 01</span></div><div class="expertise-copy"><span class="expertise-number">01 /</span><h3>РЕКЛАМНЫЕ РОЛИКИ</h3><p>Видеореклама продуктов и брендов для digital-площадок, социальных сетей и рекламных кампаний.</p></div></article>
 <article class="expertise-tile "><div class="expertise-media" aria-hidden="true"><span class="expertise-media-label">VIDEO PREVIEW / 02</span></div><div class="expertise-copy"><span class="expertise-number">02 /</span><h3>ИМИДЖЕВЫЕ ФИЛЬМЫ</h3><p>Атмосферные визуальные истории, раскрывающие характер, эстетику и ценности бренда.</p></div></article>
@@ -1311,6 +1318,23 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
+
+<dialog id="ecommerce-lightbox" aria-label="Фотопроект FASHION E-COMMERCE"><div class="gallery-shell"><div class="gallery-header"><span>FASHION — E-COMMERCE <span style="color:#a99176">/ COMMERCIAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/fashion-ecommerce/1.jpg" alt="FASHION — E-COMMERCE, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОММЕРЧЕСКАЯ СЪЁМКА ДЛЯ МАРКЕТПЛЕЙСА</div></div></dialog>
+<script>
+(()=>{const dialog=document.getElementById('ecommerce-lightbox'),open=document.querySelector('[data-still-project="ecommerce"] .still-project-open');if(!dialog||!open)return;
+const images=['1.jpg','2.jpg','4.jpg','5.jpg','6.png','8.jpg'].map(name=>'portfolio/fashion-ecommerce/'+name);
+const img=dialog.querySelector('.gallery-image'),counter=dialog.querySelector('[data-gallery-counter]');let index=0;
+function show(i){index=(i+images.length)%images.length;img.src=images[index];img.alt='FASHION — E-COMMERCE, кадр '+(index+1)+' из '+images.length;counter.textContent=String(index+1).padStart(2,'0')+' / '+String(images.length).padStart(2,'0');}
+open.addEventListener('click',()=>{show(0);dialog.showModal()});
+dialog.querySelector('.gallery-close').addEventListener('click',()=>dialog.close());
+dialog.querySelector('[data-gallery-prev]').addEventListener('click',()=>show(index-1));
+dialog.querySelector('[data-gallery-next]').addEventListener('click',()=>show(index+1));
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.key==='ArrowRight')show(index+1)});
+let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
+})();
+</script>
+
 <!-- Restore page scroll after closing any photo gallery -->
 <script>
 (()=>{
@@ -1321,7 +1345,8 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
     ['miralu','miralu-lightbox'],
     ['befree','befree-lightbox'],
     ['jagermeister','jagermeister-lightbox'],
-    ['sakhalin','sakhalin-lightbox']
+    ['sakhalin','sakhalin-lightbox'],
+    ['ecommerce','ecommerce-lightbox']
   ];
   galleries.forEach(([project,id])=>{
     const dialog=document.getElementById(id);
