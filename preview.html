@@ -553,9 +553,11 @@
     .hover-player { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
     .video-body h3 { font-size:23px; }
     .video-body p { font-size:14px; }
-    .video-modal { border:1px solid #ffffff35; border-radius:18px; padding:40px 12px 12px; width:min(960px,95vw); max-width:95vw; background:#101010; color:white; }
+    /* Override the global body > * positioning: the player belongs to the viewport, not the document. */
+    .video-modal { position:fixed; inset:0; margin:auto; height:fit-content; max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px); overflow:auto; border:1px solid #ffffff35; border-radius:18px; padding:40px 12px 12px; width:min(960px,95vw); max-width:95vw; background:#101010; color:white; }
+    html.video-modal-open { overflow:hidden; overscroll-behavior:none; scroll-behavior:auto !important; }
     .video-modal::backdrop { background:#000d; }
-    .video-modal video { width:100%; height:auto; max-height:78vh; display:block; object-fit:contain; background:#000; }
+    .video-modal video { width:100%; height:auto; max-height:78vh; max-height:calc(100dvh - 90px); display:block; object-fit:contain; background:#000; }
     .video-modal.is-vertical { width:min(520px,95vw); }
     .video-poster { pointer-events:none; }
     .preview-play { transition:opacity .2s ease; }
@@ -1164,7 +1166,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 <section class="section content-section" id="about"><div class="container"><div class="section-tag">07 / THE CREATOR</div><div class="creator-grid"><div class="creator-copy"><h2 class="section-title display-heading">ЗА КАДРОМ — LERCHIKART.</h2><p>Меня зовут Валерия. Я AI-креатор и визуальный автор, работаю под творческим именем LERCHIKART.</p><p>Мой путь в визуальном искусстве начался с фотографии. Шесть лет работы с камерой научили меня видеть свет, композицию, эмоции и детали, из которых складывается сильный кадр.</p><p>Сегодня я переношу этот опыт в AI-продакшен — создаю рекламные фильмы, визуальные концепции и истории, в которых технологии становятся инструментом для воплощения идей.</p><p>Для меня важно не просто создать красивую картинку, а сделать визуал, у которого есть характер.</p></div><div class="creator-portrait"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div></div></div></section>
 
   <dialog class="video-modal" id="videoModal" aria-label="Просмотр видео">
-    <button type="button" class="modal-close" aria-label="Закрыть">×</button>
+    <button type="button" class="modal-close" aria-label="Закрыть" autofocus>×</button>
     <video controls playsinline preload="none" aria-label="Видео проекта"></video>
   </dialog>
   <script>
@@ -1172,6 +1174,12 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
       const cards = [...document.querySelectorAll('.video-card[data-src]')];
       const modal = document.getElementById('videoModal');
       const player = modal.querySelector('video');
+      const html = document.documentElement;
+      let returnPosition = null;
+      let returnFocus = null;
+      const restorePosition = () => {
+        if (returnPosition) window.scrollTo(returnPosition.x, returnPosition.y);
+      };
       player.addEventListener('loadedmetadata', () => {
         if (modal.open && player.videoWidth && player.videoHeight) {
           modal.classList.toggle('is-vertical', player.videoHeight > player.videoWidth);
@@ -1186,7 +1194,20 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
       const close = () => { if (modal.open) modal.close(); else resetPlayer(); };
       modal.querySelector('.modal-close').addEventListener('click', close);
       modal.addEventListener('click', e => { if (e.target === modal) close(); });
-      modal.addEventListener('close', resetPlayer);
+      modal.addEventListener('close', () => {
+        resetPlayer();
+        if (returnFocus) {
+          try { returnFocus.focus({preventScroll:true}); } catch {}
+        }
+        restorePosition();
+        requestAnimationFrame(() => {
+          if (modal.open) return;
+          restorePosition();
+          html.classList.remove('video-modal-open');
+          returnPosition = null;
+          returnFocus = null;
+        });
+      });
 
       document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => {
@@ -1252,7 +1273,14 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
           player.src = src;
           player.muted = false;
           player.volume = 1;
+          returnPosition = {x:window.scrollX, y:window.scrollY};
+          returnFocus = preview;
+          html.classList.add('video-modal-open');
           modal.showModal();
+          restorePosition();
+          requestAnimationFrame(() => {
+            if (modal.open) restorePosition();
+          });
           player.play().catch(() => {});
         });
         if ('IntersectionObserver' in window) {
