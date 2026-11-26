@@ -983,6 +983,17 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
   font:inherit; font-size:12px; cursor:pointer;
 }
 .new-hero .hero-play-fallback[hidden] { display:none !important; }
+
+/* Independent project credits: keep previews square and credits below the artwork. */
+.videos-grid .video-card, .videos-grid .video-card.is-horizontal, .videos-grid .video-card.is-vertical { aspect-ratio:auto; }
+.videos-grid .video-frame { position:relative; width:100%; aspect-ratio:1 / 1; overflow:visible; }
+#portfolio .project-credit, #portfolio .project-disclaimer, #stills .project-disclaimer {
+  margin:8px 0 0; color:#b2a69a; font:12px/1.5 Arial,Helvetica,sans-serif;
+  overflow-wrap:break-word;
+}
+@media(max-width:600px) {
+  #portfolio .project-credit, #portfolio .project-disclaimer, #stills .project-disclaimer { font-size:11px; line-height:1.5; margin-top:7px; }
+}
 </style>
 </head>
 <body>
@@ -1006,94 +1017,137 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
       </div>
       <div class="videos-grid">
         <article class="video-card is-horizontal" data-category="advertising" data-src="portfolio/videos/%D1%81%D1%83%D0%BC%D0%BA%D0%B0%201.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть DAYDESIGN со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">DAYDESIGN · Авторская AI-концепция · Публикация в соавторстве с брендом</p>
         </article>
         <article class="video-card is-horizontal" data-category="advertising" data-src="portfolio/videos/%D0%A3%D0%BA%D1%80%D0%B0%D1%88%D0%B5%D0%BD%D0%B8%D1%8F%202.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Fashion Jewelry со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
         </article>
         <article class="video-card is-vertical" data-category="advertising" data-src="portfolio/videos/demix%203.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Demix со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
         </article>
         <article class="video-card is-horizontal" data-category="advertising" data-src="portfolio/videos/%D0%B4%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%204.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Добрый со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
         </article>
         <article class="video-card is-vertical" data-category="advertising" data-src="portfolio/videos/%D0%9C%D0%B8%D1%80%D0%B0%D0%BB%D1%83%205.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть MIRALU — Вне времени со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
         </article>
         <article class="video-card is-horizontal" data-category="advertising" data-src="portfolio/videos/%D1%8D%D0%BA%D0%B7%D0%BE%206.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Экзо со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
         </article>
         <article class="video-card is-horizontal" data-category="advertising" data-src="portfolio/videos/eyya%207.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть EYYA со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">EYYA · Авторская AI-концепция · 1,7 млн просмотров</p>
         </article>
         <article class="video-card is-horizontal" data-auto-orientation="true" data-category="advertising" data-src="portfolio/videos/%D0%92%D0%BA%D1%83%D1%81%D0%BD%D0%BE%20%D0%B8%20%D1%82%D0%BE%D1%87%D0%BA%D0%B0.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Вкусно — и точка со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
         </article>
         <article class="video-card is-vertical" data-category="animation" data-src="portfolio/videos/%D1%81%D1%82%D0%BE%D0%BF%20%D0%BC%D0%BE%D1%83%D1%88%D0%B5%D0%BD%208.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть MIRALU — Stop Motion со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
         </article>
         <article class="video-card is-vertical" data-category="animation" data-src="portfolio/videos/%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20%D1%81%D0%B0%D1%85%D0%B0%D0%BB%D0%B8%D0%BD%209.MP4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть SAKHALIN со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
         </article>
         <article class="video-card is-horizontal" data-category="clips" data-src="portfolio/videos/%D0%9A%D0%BB%D0%B8%D0%BF%2010_site.mp4">
-          <button class="video-preview" type="button" aria-label="Смотреть Клип певицы со звуком">
+          <div class="video-frame">
+          <button class="video-preview" type="button" aria-label="Смотреть клип Ирины Астровко со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">Ирина Астровко · Совместный музыкальный проект</p>
         </article>
         <article class="video-card is-horizontal" data-category="clips" data-src="portfolio/videos/%D0%9A%D0%BB%D0%B8%D0%BF%20%D0%9E%20%D0%92%D0%BE%D0%B9%D0%BD%D0%B5%2011_site.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Авторский клип к 9 Мая со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">Авторская песня и клип · 600 тыс. просмотров</p>
         </article>
         <article class="video-card is-horizontal" data-auto-orientation="true" data-category="cartoons" data-src="portfolio/videos/%D0%94%D1%83%D1%88%D0%B0.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Душа со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">Авторский AI-мультфильм</p>
         </article>
         <article class="video-card is-horizontal" data-auto-orientation="true" data-category="cartoons" data-src="portfolio/videos/%D0%9C%D0%B0%D0%BC%D0%B0%20%D0%9A%D0%B8%D1%80%D0%B0.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Мама Кира со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">Персональный AI-мультфильм · Авторский стих и анимация</p>
         </article>
         <article class="video-card is-horizontal" data-auto-orientation="true" data-category="cartoons" data-src="portfolio/videos/multfilm_1.mp4">
+          <div class="video-frame">
           <button class="video-preview" type="button" aria-label="Смотреть Мультфильм со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
+          </div>
+          <p class="project-credit">Авторский AI-мультфильм</p>
         </article>
       </div>
     </div>
@@ -1108,6 +1162,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">BEAUTY CAMPAIGN / 01</div><h3 class="still-project-title">KRYGINA — CONCRETE</h3><p class="still-project-subtitle">Концептуальная AI-кампания · 5 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 <article class="still-card still-project" data-still-category="fashion product" data-still-project="loreal">
 <button class="still-project-open" type="button" aria-label="Открыть фотопроект L'ORÉAL PEARL PORTRAIT">
@@ -1115,6 +1170,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">BEAUTY CONCEPT / 02</div><h3 class="still-project-title">L’ORÉAL — PEARL PORTRAIT</h3><p class="still-project-subtitle">Неофициальная AI-концепция · 6 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 <article class="still-card still-project" data-still-category="product editorial" data-still-project="diamond">
 <button class="still-project-open" type="button" aria-label="Открыть фотопроект DIAMOND LIGHT STUDY">
@@ -1122,6 +1178,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">JEWELRY CAMPAIGN / 03</div><h3 class="still-project-title">DIAMOND — LIGHT STUDY</h3><p class="still-project-subtitle">Концептуальная ювелирная кампания · 6 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 <article class="still-card still-project" data-still-category="product" data-still-project="miralu">
 <button class="still-project-open" type="button" aria-label="Открыть каталог украшений MIRALU">
@@ -1136,6 +1193,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">FASHION EDITORIAL / 05</div><h3 class="still-project-title">BEFREE — SILVER</h3><p class="still-project-subtitle">Концептуальная fashion-кампания · 7 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 <article class="still-card still-project" data-still-category="product editorial" data-still-project="jagermeister">
 <button class="still-project-open" type="button" aria-label="Открыть фотопроект JÄGERMEISTER THE SPIRIT OF 56">
@@ -1143,6 +1201,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">BOTANICAL CAMPAIGN / 06</div><h3 class="still-project-title">JÄGERMEISTER — THE SPIRIT OF 56</h3><p class="still-project-subtitle">Концептуальная рекламная кампания · 6 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 
 <article class="still-card still-project" data-still-category="editorial" data-still-project="sakhalin">
@@ -1151,6 +1210,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">PAPER-CUT ANIMATION / 07</div><h3 class="still-project-title">САХАЛИН — PAPER CUT ANIMATION</h3><p class="still-project-subtitle">Кадры из анимационного ролика для ресторана · 7 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 <article class="still-card still-project" data-still-category="fashion product" data-still-project="ecommerce">
 <button class="still-project-open" type="button" aria-label="Открыть коммерческую fashion-съёмку для маркетплейса">
@@ -1165,6 +1225,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 <span class="still-project-overlay">СМОТРЕТЬ ПРОЕКТ <span aria-hidden="true">↗</span></span>
 </button>
 <div class="still-meta">JEWELRY EDITORIAL / 09</div><h3 class="still-project-title">SUNLIGHT — FESTIVE COLLECTION</h3><p class="still-project-subtitle">Неофициальная новогодняя AI-концепция · 5 изображений</p>
+<p class="project-disclaimer">Авторская AI-концепция. Неофициальный рекламный проект.</p>
 </article>
 </div><div class="stills-hint">Выберите проект, чтобы посмотреть всю серию →</div></div></section>
 <section class="section content-section" id="approach"><div class="container"><div class="section-tag">04 / THE APPROACH</div><h2 class="section-title display-heading">ИДЕЯ ВАЖНЕЕ ИНСТРУМЕНТА.</h2><p class="approach-lead">AI расширяет возможности визуального производства: от реалистичных рекламных сцен до миров, существующих только в воображении. Для меня это инструмент воплощения идеи, а не замена творческому процессу.</p><div class="approach-principles">
