@@ -971,12 +971,24 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 @media(max-width:360px) {
   #about .creator-portrait-inline { width:39%; margin-right:12px; }
 }
+
+/* A deliberate playback control when mobile browsers deny background autoplay. */
+.new-hero .hero-bg-video { pointer-events:none; }
+.new-hero .hero-bg-video::-webkit-media-controls-start-playback-button { display:none !important; -webkit-appearance:none; }
+.new-hero .hero-bg-video::-webkit-media-controls { display:none !important; }
+.new-hero .hero-play-fallback {
+  display:inline-flex; align-items:center; gap:8px; margin-top:18px;
+  min-height:44px; padding:8px 14px; border:1px solid rgba(239,227,211,.35);
+  border-radius:24px; color:var(--text); background:rgba(0,0,0,.42);
+  font:inherit; font-size:12px; cursor:pointer;
+}
+.new-hero .hero-play-fallback[hidden] { display:none !important; }
 </style>
 </head>
 <body>
 
   <header class="site-header"><div class="container topbar"><a class="brand" href="#top">✳ <strong>LERCHIKART</strong></a><nav class="nav" aria-label="Навигация"><a href="#portfolio">РАБОТЫ</a><a href="#approach">ПОДХОД</a><a href="#about">ОБО МНЕ</a><a href="#pricing">ПРАЙС</a></nav></div></header>
-<section class="hero new-hero" id="top"><div class="hero-placeholder hero-video-bg" aria-hidden="true"><video class="hero-bg-video" autoplay muted loop playsinline preload="metadata"><source src="lerchikart-hero-optimized.mp4" type="video/mp4"></video></div><div class="container hero-content"><div class="hero-kicker">AI CREATOR / VISUAL DIRECTOR</div><h1>МЕДИАКОНТЕНТ<br>ДЛЯ БРЕНДОВ<br>ЧЕРЕЗ <span class="accent">AI</span></h1><div class="typing-line"><span id="typingText" aria-label="Направления: рекламные ролики, имиджевые видео, продуктовая реклама, анимация, AI-визуал">Рекламные ролики</span><span class="typing-cursor" aria-hidden="true">|</span></div><div class="hero-actions"><a class="main-btn" href="#portfolio">ВИДЕОПРОЕКТЫ ↓</a><a class="ghost-btn" href="#stills">ФОТОПРОЕКТЫ ↓</a></div></div><div class="hero-bottom">LERCHIKART © 2026 <span>SCROLL TO EXPLORE ↓</span></div></section>
+<section class="hero new-hero" id="top"><div class="hero-placeholder hero-video-bg" aria-hidden="true"><video class="hero-bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture><source src="lerchikart-hero-optimized.mp4" type="video/mp4"></video></div><div class="container hero-content"><div class="hero-kicker">AI CREATOR / VISUAL DIRECTOR</div><h1>МЕДИАКОНТЕНТ<br>ДЛЯ БРЕНДОВ<br>ЧЕРЕЗ <span class="accent">AI</span></h1><div class="typing-line"><span id="typingText" aria-label="Направления: рекламные ролики, имиджевые видео, продуктовая реклама, анимация, AI-визуал">Рекламные ролики</span><span class="typing-cursor" aria-hidden="true">|</span></div><div class="hero-actions"><a class="main-btn" href="#portfolio">ВИДЕОПРОЕКТЫ ↓</a><a class="ghost-btn" href="#stills">ФОТОПРОЕКТЫ ↓</a></div><button class="hero-play-fallback" type="button" hidden aria-label="Запустить фоновое видео">▶ <span>Включить фоновое видео</span></button></div><div class="hero-bottom">LERCHIKART © 2026 <span>SCROLL TO EXPLORE ↓</span></div></section>
 <section class="section" id="portfolio">
     <div class="container">
       <div class="section-tag">02 / MOTION WORKS</div>
@@ -1536,6 +1548,36 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
       });
     });
   });
+})();
+</script>
+<script>
+(()=>{
+  const video=document.querySelector('.hero-bg-video');
+  const button=document.querySelector('.hero-play-fallback');
+  if(!video||!button)return;
+  video.defaultMuted=true;
+  video.muted=true;
+  video.playsInline=true;
+  let attempt=0;
+  const update=()=>{button.hidden=!video.paused&&!video.ended&&!video.error};
+  const play=()=>{
+    const current=++attempt;
+    video.muted=true;
+    try {
+      const result=video.play();
+      if(result&&typeof result.then==='function'){
+        result.then(()=>{if(current===attempt)update()}).catch(()=>{if(current===attempt)update()});
+      }
+    } catch { update(); }
+    setTimeout(()=>{if(current===attempt)update()},1200);
+  };
+  video.addEventListener('playing',()=>{button.hidden=true});
+  video.addEventListener('pause',update);
+  video.addEventListener('error',update);
+  button.addEventListener('click',play);
+  window.addEventListener('pageshow',()=>{if(video.paused)play()});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&video.paused)play()});
+  play();
 })();
 </script>
 </body>
