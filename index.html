@@ -553,9 +553,11 @@
     .hover-player { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
     .video-body h3 { font-size:23px; }
     .video-body p { font-size:14px; }
-    .video-modal { border:1px solid #ffffff35; border-radius:18px; padding:40px 12px 12px; width:min(960px,95vw); max-width:95vw; background:#101010; color:white; }
+    /* Override the global body > * positioning: the player belongs to the viewport, not the document. */
+    .video-modal { position:fixed; inset:0; margin:auto; height:fit-content; max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px); overflow:auto; border:1px solid #ffffff35; border-radius:18px; padding:40px 12px 12px; width:min(960px,95vw); max-width:95vw; background:#101010; color:white; }
+    html.video-modal-open { overflow:hidden; overscroll-behavior:none; scroll-behavior:auto !important; }
     .video-modal::backdrop { background:#000d; }
-    .video-modal video { width:100%; height:auto; max-height:78vh; display:block; object-fit:contain; background:#000; }
+    .video-modal video { width:100%; height:auto; max-height:78vh; max-height:calc(100dvh - 90px); display:block; object-fit:contain; background:#000; }
     .video-modal.is-vertical { width:min(520px,95vw); }
     .video-poster { pointer-events:none; }
     .preview-play { transition:opacity .2s ease; }
@@ -944,12 +946,49 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 #sunlight-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
 #sunlight-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
 @media(max-width:600px){#sunlight-lightbox .gallery-shell{padding:15px 9px}#sunlight-lightbox .gallery-image{max-width:calc(100vw - 100px)}#sunlight-lightbox .gallery-nav{flex-basis:36px;height:36px}}
+
+/* Photo galleries must stay attached to the visible viewport, including on iOS. */
+dialog[id$="-lightbox"] {
+  position:fixed; inset:0; margin:0;
+  width:100%; height:100vh; height:100dvh;
+  max-width:100%; max-height:100vh; max-height:100dvh;
+  overflow:auto; overscroll-behavior:contain;
+}
+html.photo-gallery-open { overflow:hidden; overscroll-behavior:none; scroll-behavior:auto !important; }
+dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
+
+/* About: compact editorial portrait with natural text wrapping on mobile. */
+#about .creator-portrait-inline { display:none; }
+@media(max-width:760px) {
+  #about .creator-grid { display:block; }
+  #about .creator-copy { display:flow-root; }
+  #about .creator-portrait-desktop { display:none; }
+  #about .creator-portrait-inline {
+    display:block; float:left; width:42%; max-width:190px;
+    margin:6px 16px 8px 0; border-radius:12px; aspect-ratio:3 / 4;
+  }
+}
+@media(max-width:360px) {
+  #about .creator-portrait-inline { width:39%; margin-right:12px; }
+}
+
+/* A deliberate playback control when mobile browsers deny background autoplay. */
+.new-hero .hero-bg-video { pointer-events:none; }
+.new-hero .hero-bg-video::-webkit-media-controls-start-playback-button { display:none !important; -webkit-appearance:none; }
+.new-hero .hero-bg-video::-webkit-media-controls { display:none !important; }
+.new-hero .hero-play-fallback {
+  display:inline-flex; align-items:center; gap:8px; margin-top:18px;
+  min-height:44px; padding:8px 14px; border:1px solid rgba(239,227,211,.35);
+  border-radius:24px; color:var(--text); background:rgba(0,0,0,.42);
+  font:inherit; font-size:12px; cursor:pointer;
+}
+.new-hero .hero-play-fallback[hidden] { display:none !important; }
 </style>
 </head>
 <body>
 
   <header class="site-header"><div class="container topbar"><a class="brand" href="#top">✳ <strong>LERCHIKART</strong></a><nav class="nav" aria-label="Навигация"><a href="#portfolio">РАБОТЫ</a><a href="#approach">ПОДХОД</a><a href="#about">ОБО МНЕ</a><a href="#pricing">ПРАЙС</a></nav></div></header>
-<section class="hero new-hero" id="top"><div class="hero-placeholder hero-video-bg" aria-hidden="true"><video class="hero-bg-video" autoplay muted loop playsinline preload="metadata"><source src="lerchikart-hero-optimized.mp4" type="video/mp4"></video></div><div class="container hero-content"><div class="hero-kicker">AI CREATOR / VISUAL DIRECTOR</div><h1>МЕДИАКОНТЕНТ<br>ДЛЯ БРЕНДОВ<br>ЧЕРЕЗ <span class="accent">AI</span></h1><div class="typing-line"><span id="typingText" aria-label="Направления: рекламные ролики, имиджевые видео, продуктовая реклама, анимация, AI-визуал">Рекламные ролики</span><span class="typing-cursor" aria-hidden="true">|</span></div><div class="hero-actions"><a class="main-btn" href="#portfolio">ВИДЕОПРОЕКТЫ ↓</a><a class="ghost-btn" href="#stills">ФОТОПРОЕКТЫ ↓</a></div></div><div class="hero-bottom">LERCHIKART © 2026 <span>SCROLL TO EXPLORE ↓</span></div></section>
+<section class="hero new-hero" id="top"><div class="hero-placeholder hero-video-bg" aria-hidden="true"><video class="hero-bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture><source src="lerchikart-hero-optimized.mp4" type="video/mp4"></video></div><div class="container hero-content"><div class="hero-kicker">AI CREATOR / VISUAL DIRECTOR</div><h1>МЕДИАКОНТЕНТ<br>ДЛЯ БРЕНДОВ<br>ЧЕРЕЗ <span class="accent">AI</span></h1><div class="typing-line"><span id="typingText" aria-label="Направления: рекламные ролики, имиджевые видео, продуктовая реклама, анимация, AI-визуал">Рекламные ролики</span><span class="typing-cursor" aria-hidden="true">|</span></div><div class="hero-actions"><a class="main-btn" href="#portfolio">ВИДЕОПРОЕКТЫ ↓</a><a class="ghost-btn" href="#stills">ФОТОПРОЕКТЫ ↓</a></div><button class="hero-play-fallback" type="button" hidden aria-label="Запустить фоновое видео">▶ <span>Включить фоновое видео</span></button></div><div class="hero-bottom">LERCHIKART © 2026 <span>SCROLL TO EXPLORE ↓</span></div></section>
 <section class="section" id="portfolio">
     <div class="container">
       <div class="section-tag">02 / MOTION WORKS</div>
@@ -963,6 +1002,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
         <button class="filter-btn" data-filter="advertising" aria-pressed="false">Реклама</button>
         <button class="filter-btn" data-filter="clips" aria-pressed="false">Клипы</button>
         <button class="filter-btn" data-filter="animation" aria-pressed="false">Анимация</button>
+        <button class="filter-btn" data-filter="cartoons" aria-pressed="false">Мультфильмы</button>
       </div>
       <div class="videos-grid">
         <article class="video-card is-horizontal" data-category="advertising" data-src="portfolio/videos/%D1%81%D1%83%D0%BC%D0%BA%D0%B0%201.mp4">
@@ -1007,6 +1047,12 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
         </article>
+        <article class="video-card is-horizontal" data-auto-orientation="true" data-category="advertising" data-src="portfolio/videos/%D0%92%D0%BA%D1%83%D1%81%D0%BD%D0%BE%20%D0%B8%20%D1%82%D0%BE%D1%87%D0%BA%D0%B0.mp4">
+          <button class="video-preview" type="button" aria-label="Смотреть Вкусно — и точка со звуком">
+            <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
+            <span class="preview-shade"></span><span class="preview-play">▶</span>
+          </button>
+        </article>
         <article class="video-card is-vertical" data-category="animation" data-src="portfolio/videos/%D1%81%D1%82%D0%BE%D0%BF%20%D0%BC%D0%BE%D1%83%D1%88%D0%B5%D0%BD%208.mp4">
           <button class="video-preview" type="button" aria-label="Смотреть MIRALU — Stop Motion со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
@@ -1027,6 +1073,24 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
         </article>
         <article class="video-card is-horizontal" data-category="clips" data-src="portfolio/videos/%D0%9A%D0%BB%D0%B8%D0%BF%20%D0%9E%20%D0%92%D0%BE%D0%B9%D0%BD%D0%B5%2011_site.mp4">
           <button class="video-preview" type="button" aria-label="Смотреть Авторский клип к 9 Мая со звуком">
+            <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
+            <span class="preview-shade"></span><span class="preview-play">▶</span>
+          </button>
+        </article>
+        <article class="video-card is-horizontal" data-auto-orientation="true" data-category="cartoons" data-src="portfolio/videos/%D0%94%D1%83%D1%88%D0%B0.mp4">
+          <button class="video-preview" type="button" aria-label="Смотреть Душа со звуком">
+            <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
+            <span class="preview-shade"></span><span class="preview-play">▶</span>
+          </button>
+        </article>
+        <article class="video-card is-horizontal" data-auto-orientation="true" data-category="cartoons" data-src="portfolio/videos/%D0%9C%D0%B0%D0%BC%D0%B0%20%D0%9A%D0%B8%D1%80%D0%B0.mp4">
+          <button class="video-preview" type="button" aria-label="Смотреть Мама Кира со звуком">
+            <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
+            <span class="preview-shade"></span><span class="preview-play">▶</span>
+          </button>
+        </article>
+        <article class="video-card is-horizontal" data-auto-orientation="true" data-category="cartoons" data-src="portfolio/videos/multfilm_1.mp4">
+          <button class="video-preview" type="button" aria-label="Смотреть Мультфильм со звуком">
             <video class="video-poster" muted playsinline preload="none" aria-hidden="true"></video>
             <span class="preview-shade"></span><span class="preview-play">▶</span>
           </button>
@@ -1136,10 +1200,10 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 </div>
 <p class="pricing-note">Указана стартовая стоимость. Итоговый бюджет зависит от сложности, количества сцен, требований к деталям и объёма правок. Сложный липсинк, дополнительные версии, клипы и нестандартные проекты рассчитываются индивидуально.</p>
 </div></section>
-<section class="section content-section" id="about"><div class="container"><div class="section-tag">07 / THE CREATOR</div><div class="creator-grid"><div class="creator-copy"><h2 class="section-title display-heading">ЗА КАДРОМ — LERCHIKART.</h2><p>Меня зовут Валерия. Я AI-креатор и визуальный автор, работаю под творческим именем LERCHIKART.</p><p>Мой путь в визуальном искусстве начался с фотографии. Шесть лет работы с камерой научили меня видеть свет, композицию, эмоции и детали, из которых складывается сильный кадр.</p><p>Сегодня я переношу этот опыт в AI-продакшен — создаю рекламные фильмы, визуальные концепции и истории, в которых технологии становятся инструментом для воплощения идей.</p><p>Для меня важно не просто создать красивую картинку, а сделать визуал, у которого есть характер.</p></div><div class="creator-portrait"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div></div></div></section>
+<section class="section content-section" id="about"><div class="container"><div class="section-tag">07 / THE CREATOR</div><div class="creator-grid"><div class="creator-copy"><h2 class="section-title display-heading">ЗА КАДРОМ — LERCHIKART.</h2><div class="creator-portrait creator-portrait-inline"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div><p>Меня зовут Валерия. Я AI-креатор и визуальный автор, работаю под творческим именем LERCHIKART.</p><p>Мой путь в визуальном искусстве начался с фотографии. Шесть лет работы с камерой научили меня видеть свет, композицию, эмоции и детали, из которых складывается сильный кадр.</p><p>Сегодня я переношу этот опыт в AI-продакшен — создаю рекламные фильмы, визуальные концепции и истории, в которых технологии становятся инструментом для воплощения идей.</p><p>Для меня важно не просто создать красивую картинку, а сделать визуал, у которого есть характер.</p></div><div class="creator-portrait creator-portrait-desktop"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div></div></div></section>
 
   <dialog class="video-modal" id="videoModal" aria-label="Просмотр видео">
-    <button type="button" class="modal-close" aria-label="Закрыть">×</button>
+    <button type="button" class="modal-close" aria-label="Закрыть" autofocus>×</button>
     <video controls playsinline preload="none" aria-label="Видео проекта"></video>
   </dialog>
   <script>
@@ -1147,6 +1211,17 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
       const cards = [...document.querySelectorAll('.video-card[data-src]')];
       const modal = document.getElementById('videoModal');
       const player = modal.querySelector('video');
+      const html = document.documentElement;
+      let returnPosition = null;
+      let returnFocus = null;
+      const restorePosition = () => {
+        if (returnPosition) window.scrollTo(returnPosition.x, returnPosition.y);
+      };
+      player.addEventListener('loadedmetadata', () => {
+        if (modal.open && player.videoWidth && player.videoHeight) {
+          modal.classList.toggle('is-vertical', player.videoHeight > player.videoWidth);
+        }
+      });
       const resetPlayer = () => {
         player.pause();
         player.removeAttribute('src');
@@ -1156,7 +1231,20 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
       const close = () => { if (modal.open) modal.close(); else resetPlayer(); };
       modal.querySelector('.modal-close').addEventListener('click', close);
       modal.addEventListener('click', e => { if (e.target === modal) close(); });
-      modal.addEventListener('close', resetPlayer);
+      modal.addEventListener('close', () => {
+        resetPlayer();
+        if (returnFocus) {
+          try { returnFocus.focus({preventScroll:true}); } catch {}
+        }
+        restorePosition();
+        requestAnimationFrame(() => {
+          if (modal.open) return;
+          restorePosition();
+          html.classList.remove('video-modal-open');
+          returnPosition = null;
+          returnFocus = null;
+        });
+      });
 
       document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => {
@@ -1183,6 +1271,11 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
           teaser.load();
         };
         teaser.addEventListener('loadedmetadata', () => {
+          if (card.dataset.autoOrientation && teaser.videoWidth && teaser.videoHeight) {
+            const vertical = teaser.videoHeight > teaser.videoWidth;
+            card.classList.toggle('is-vertical', vertical);
+            card.classList.toggle('is-horizontal', !vertical);
+          }
           if (!card.matches(':hover') && Number.isFinite(teaser.duration)) {
             try { teaser.currentTime = Math.min(0.15, Math.max(0, teaser.duration - 0.05)); } catch {}
           }
@@ -1217,7 +1310,14 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
           player.src = src;
           player.muted = false;
           player.volume = 1;
+          returnPosition = {x:window.scrollX, y:window.scrollY};
+          returnFocus = preview;
+          html.classList.add('video-modal-open');
           modal.showModal();
+          restorePosition();
+          requestAnimationFrame(() => {
+            if (modal.open) restorePosition();
+          });
           player.play().catch(() => {});
         });
         if ('IntersectionObserver' in window) {
@@ -1248,7 +1348,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 (()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;let ticking=false;function drift(){ticking=false;const max=Math.max(1,document.documentElement.scrollHeight-innerHeight),p=Math.min(1,Math.max(0,scrollY/max)),t=p*Math.PI*2;const vars={'--glow-x':(62+23*Math.sin(t*1.6+.5))+'%','--glow-y':(41+23*Math.cos(t*1.1))+'%','--glow-x2':(30+23*Math.cos(t*1.35+.8))+'%','--glow-y2':(64+22*Math.sin(t*1.4+1.1))+'%','--glow-x3':(77+14*Math.sin(t*1.8+2))+'%','--glow-y3':(76+15*Math.cos(t*1.2+1))+'%'};for(const [key,val] of Object.entries(vars))document.body.style.setProperty(key,val)}addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(drift)}},{passive:true});addEventListener('resize',drift);drift()})();
 </script>
 
-<dialog id="krygina-lightbox" aria-label="Фотопроект KRYGINA CONCRETE"><div class="gallery-shell"><div class="gallery-header"><span>KRYGINA — CONCRETE <span style="color:#a99176">/ CONCEPT CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/krygina-concrete/1.png" alt="KRYGINA CONCRETE — кадр рекламной кампании"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
+<dialog id="krygina-lightbox" aria-label="Фотопроект KRYGINA CONCRETE"><div class="gallery-shell"><div class="gallery-header"><span>KRYGINA — CONCRETE <span style="color:#a99176">/ CONCEPT CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/krygina-concrete/1.png" alt="KRYGINA CONCRETE — кадр рекламной кампании"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('krygina-lightbox'),open=document.querySelector('[data-still-project="krygina"] .still-project-open');if(!dialog||!open)return;
 const images=['1.png','2.png','3.jpg','5.jpg','4.jpg'].map(name=>'portfolio/krygina-concrete/'+name);
@@ -1263,7 +1363,7 @@ dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.
 let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
 })();
 </script>
-<dialog id="befree-lightbox" aria-label="Фотопроект BEFREE SILVER"><div class="gallery-shell"><div class="gallery-header"><span>BEFREE — SILVER <span style="color:#a99176">/ FASHION EDITORIAL</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/befree-silver/1.jpg" alt="BEFREE SILVER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КОНЦЕПТУАЛЬНАЯ FASHION-КАМПАНИЯ</div></div></dialog>
+<dialog id="befree-lightbox" aria-label="Фотопроект BEFREE SILVER"><div class="gallery-shell"><div class="gallery-header"><span>BEFREE — SILVER <span style="color:#a99176">/ FASHION EDITORIAL</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/befree-silver/1.jpg" alt="BEFREE SILVER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КОНЦЕПТУАЛЬНАЯ FASHION-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('befree-lightbox'),open=document.querySelector('[data-still-project="befree"] .still-project-open');if(!dialog||!open)return;
 const images=Array.from({length:7},(_,i)=>'portfolio/befree-silver/'+(i+1)+'.jpg');
@@ -1279,7 +1379,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpeg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
+<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpeg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('diamond-lightbox'),card=document.querySelector('[data-still-project="diamond"]'),open=card?.querySelector('.still-project-open');if(!dialog||!open)return;
 const images=['1.jpeg','2.png','3.jpeg','4.jpeg','5.jpeg','6.jpeg'].map(name=>'portfolio/diamond-light-study/'+name);
@@ -1296,7 +1396,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="loreal-lightbox" aria-label="Фотопроект L’ORÉAL PEARL PORTRAIT"><div class="gallery-shell"><div class="gallery-header"><span>L’ORÉAL — PEARL PORTRAIT <span style="color:#a99176">/ UNCOMMISSIONED CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/loreal-pearl-portrait/1.png" alt="L’ORÉAL — PEARL PORTRAIT, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · НЕОФИЦИАЛЬНАЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
+<dialog id="loreal-lightbox" aria-label="Фотопроект L’ORÉAL PEARL PORTRAIT"><div class="gallery-shell"><div class="gallery-header"><span>L’ORÉAL — PEARL PORTRAIT <span style="color:#a99176">/ UNCOMMISSIONED CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/loreal-pearl-portrait/1.png" alt="L’ORÉAL — PEARL PORTRAIT, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · НЕОФИЦИАЛЬНАЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('loreal-lightbox'),open=document.querySelector('[data-still-project="loreal"] .still-project-open');if(!dialog||!open)return;
 const images=['1.png','2.png','3.png','4.png','5.png','6.png'].map(name=>'portfolio/loreal-pearl-portrait/'+name);
@@ -1312,7 +1412,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="miralu-lightbox" aria-label="Каталог украшений MIRALU"><div class="gallery-shell"><div class="gallery-header"><span>MIRALU — JEWELRY <span style="color:#a99176">/ PRODUCT CATALOG</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/miralu-jewelry/1.jpg" alt="MIRALU — каталог украшений, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КАТАЛОГ УКРАШЕНИЙ MIRALU</div></div></dialog>
+<dialog id="miralu-lightbox" aria-label="Каталог украшений MIRALU"><div class="gallery-shell"><div class="gallery-header"><span>MIRALU — JEWELRY <span style="color:#a99176">/ PRODUCT CATALOG</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/miralu-jewelry/1.jpg" alt="MIRALU — каталог украшений, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КАТАЛОГ УКРАШЕНИЙ MIRALU</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('miralu-lightbox'),open=document.querySelector('[data-still-project="miralu"] .still-project-open');if(!dialog||!open)return;
 const images=['1.jpg','2.jpg','3.jpg','4.jpg','5.png','6.png'].map(name=>'portfolio/miralu-jewelry/'+name);
@@ -1328,7 +1428,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="jagermeister-lightbox" aria-label="Фотопроект JÄGERMEISTER THE SPIRIT OF 56"><div class="gallery-shell"><div class="gallery-header"><span>JÄGERMEISTER — THE SPIRIT OF 56 <span style="color:#a99176">/ BOTANICAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/jagermeister-spirit-of-56/1.png" alt="JÄGERMEISTER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
+<dialog id="jagermeister-lightbox" aria-label="Фотопроект JÄGERMEISTER THE SPIRIT OF 56"><div class="gallery-shell"><div class="gallery-header"><span>JÄGERMEISTER — THE SPIRIT OF 56 <span style="color:#a99176">/ BOTANICAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/jagermeister-spirit-of-56/1.png" alt="JÄGERMEISTER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('jagermeister-lightbox'),open=document.querySelector('[data-still-project="jagermeister"] .still-project-open');if(!dialog||!open)return;
 const images=['1.png','2.png','3.jpg','4.jpeg','5.png','6.jpg'].map(name=>'portfolio/jagermeister-spirit-of-56/'+name);
@@ -1345,7 +1445,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 </script>
 
 
-<dialog id="sakhalin-lightbox" aria-label="Фотопроект САХАЛИН PAPER CUT ANIMATION"><div class="gallery-shell"><div class="gallery-header"><span>САХАЛИН — PAPER CUT ANIMATION <span style="color:#a99176">/ RESTAURANT ANIMATION</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sakhalin-paper-animation/1.png" alt="САХАЛИН — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КАДРЫ ИЗ АНИМАЦИОННОГО РОЛИКА</div></div></dialog>
+<dialog id="sakhalin-lightbox" aria-label="Фотопроект САХАЛИН PAPER CUT ANIMATION"><div class="gallery-shell"><div class="gallery-header"><span>САХАЛИН — PAPER CUT ANIMATION <span style="color:#a99176">/ RESTAURANT ANIMATION</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sakhalin-paper-animation/1.png" alt="САХАЛИН — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КАДРЫ ИЗ АНИМАЦИОННОГО РОЛИКА</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('sakhalin-lightbox'),open=document.querySelector('[data-still-project="sakhalin"] .still-project-open');if(!dialog||!open)return;
 const images=Array.from({length:7},(_,i)=>'portfolio/sakhalin-paper-animation/'+(i+1)+'.png');
@@ -1362,7 +1462,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 </script>
 
 
-<dialog id="ecommerce-lightbox" aria-label="Фотопроект FASHION E-COMMERCE"><div class="gallery-shell"><div class="gallery-header"><span>FASHION — E-COMMERCE <span style="color:#a99176">/ COMMERCIAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/fashion-ecommerce/1.jpg" alt="FASHION — E-COMMERCE, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОММЕРЧЕСКАЯ СЪЁМКА ДЛЯ МАРКЕТПЛЕЙСА</div></div></dialog>
+<dialog id="ecommerce-lightbox" aria-label="Фотопроект FASHION E-COMMERCE"><div class="gallery-shell"><div class="gallery-header"><span>FASHION — E-COMMERCE <span style="color:#a99176">/ COMMERCIAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/fashion-ecommerce/1.jpg" alt="FASHION — E-COMMERCE, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОММЕРЧЕСКАЯ СЪЁМКА ДЛЯ МАРКЕТПЛЕЙСА</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('ecommerce-lightbox'),open=document.querySelector('[data-still-project="ecommerce"] .still-project-open');if(!dialog||!open)return;
 const images=['1.jpg','2.jpg','4.jpg','5.jpg','6.png','8.jpg'].map(name=>'portfolio/fashion-ecommerce/'+name);
@@ -1378,7 +1478,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
+<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('sunlight-lightbox'),open=document.querySelector('[data-still-project="sunlight"] .still-project-open');if(!dialog||!open)return;
 const images=['5.png','2.png','3.png','4.png','1.png'].map(name=>'portfolio/sunlight-festive-collection/'+name);
@@ -1394,7 +1494,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<!-- Restore page scroll after closing any photo gallery -->
+<!-- Preserve the viewport and scroll position for all photo galleries -->
 <script>
 (()=>{
   const galleries=[
@@ -1408,29 +1508,76 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
     ['ecommerce','ecommerce-lightbox'],
     ['sunlight','sunlight-lightbox']
   ];
+  const html=document.documentElement;
   galleries.forEach(([project,id])=>{
     const dialog=document.getElementById(id);
     const trigger=document.querySelector('[data-still-project="'+project+'"] .still-project-open');
     if(!dialog||!trigger)return;
-    let previousX=0,previousY=0;
+    let position=null;
+    const restore=()=>{
+      if(position)window.scrollTo(position.x,position.y);
+    };
     trigger.addEventListener('click',()=>{
-      previousX=window.scrollX;
-      previousY=window.scrollY;
+      position={x:window.scrollX,y:window.scrollY};
+      html.classList.add('photo-gallery-open');
     },{capture:true});
+    trigger.addEventListener('click',()=>{
+      if(!dialog.open){
+        html.classList.remove('photo-gallery-open');
+        position=null;
+        return;
+      }
+      restore();
+      requestAnimationFrame(()=>{if(dialog.open)restore()});
+    });
     dialog.addEventListener('close',()=>{
-      const html=document.documentElement;
       const previousBehavior=html.style.scrollBehavior;
       html.style.scrollBehavior='auto';
-      window.scrollTo(previousX,previousY);
+      html.classList.remove('photo-gallery-open');
+      try{trigger.focus({preventScroll:true})}catch{}
+      restore();
       requestAnimationFrame(()=>{
-        window.scrollTo(previousX,previousY);
+        if(dialog.open)return;
+        restore();
         requestAnimationFrame(()=>{
-          window.scrollTo(previousX,previousY);
+          if(dialog.open)return;
+          restore();
           html.style.scrollBehavior=previousBehavior;
+          position=null;
         });
       });
     });
   });
+})();
+</script>
+<script>
+(()=>{
+  const video=document.querySelector('.hero-bg-video');
+  const button=document.querySelector('.hero-play-fallback');
+  if(!video||!button)return;
+  video.defaultMuted=true;
+  video.muted=true;
+  video.playsInline=true;
+  let attempt=0;
+  const update=()=>{button.hidden=!video.paused&&!video.ended&&!video.error};
+  const play=()=>{
+    const current=++attempt;
+    video.muted=true;
+    try {
+      const result=video.play();
+      if(result&&typeof result.then==='function'){
+        result.then(()=>{if(current===attempt)update()}).catch(()=>{if(current===attempt)update()});
+      }
+    } catch { update(); }
+    setTimeout(()=>{if(current===attempt)update()},1200);
+  };
+  video.addEventListener('playing',()=>{button.hidden=true});
+  video.addEventListener('pause',update);
+  video.addEventListener('error',update);
+  button.addEventListener('click',play);
+  window.addEventListener('pageshow',()=>{if(video.paused)play()});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&video.paused)play()});
+  play();
 })();
 </script>
 </body>
