@@ -946,6 +946,16 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 #sunlight-lightbox .gallery-nav{flex:0 0 45px;height:45px;border:1px solid #6d6056;border-radius:50%;background:rgba(20,17,17,.8);color:#eee0cc;font-size:25px;cursor:pointer}
 #sunlight-lightbox .gallery-footer{font:12px Arial,sans-serif;color:#b6a99c;letter-spacing:.07em;padding:12px}
 @media(max-width:600px){#sunlight-lightbox .gallery-shell{padding:15px 9px}#sunlight-lightbox .gallery-image{max-width:calc(100vw - 100px)}#sunlight-lightbox .gallery-nav{flex-basis:36px;height:36px}}
+
+/* Photo galleries must stay attached to the visible viewport, including on iOS. */
+dialog[id$="-lightbox"] {
+  position:fixed; inset:0; margin:0;
+  width:100%; height:100vh; height:100dvh;
+  max-width:100%; max-height:100vh; max-height:100dvh;
+  overflow:auto; overscroll-behavior:contain;
+}
+html.photo-gallery-open { overflow:hidden; overscroll-behavior:none; scroll-behavior:auto !important; }
+dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -1311,7 +1321,7 @@ radial-gradient(ellipse 72vw 34vh at var(--glow-x2,25%) var(--glow-y2,72%),rgba(
 (()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;let ticking=false;function drift(){ticking=false;const max=Math.max(1,document.documentElement.scrollHeight-innerHeight),p=Math.min(1,Math.max(0,scrollY/max)),t=p*Math.PI*2;const vars={'--glow-x':(62+23*Math.sin(t*1.6+.5))+'%','--glow-y':(41+23*Math.cos(t*1.1))+'%','--glow-x2':(30+23*Math.cos(t*1.35+.8))+'%','--glow-y2':(64+22*Math.sin(t*1.4+1.1))+'%','--glow-x3':(77+14*Math.sin(t*1.8+2))+'%','--glow-y3':(76+15*Math.cos(t*1.2+1))+'%'};for(const [key,val] of Object.entries(vars))document.body.style.setProperty(key,val)}addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(drift)}},{passive:true});addEventListener('resize',drift);drift()})();
 </script>
 
-<dialog id="krygina-lightbox" aria-label="Фотопроект KRYGINA CONCRETE"><div class="gallery-shell"><div class="gallery-header"><span>KRYGINA — CONCRETE <span style="color:#a99176">/ CONCEPT CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/krygina-concrete/1.png" alt="KRYGINA CONCRETE — кадр рекламной кампании"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
+<dialog id="krygina-lightbox" aria-label="Фотопроект KRYGINA CONCRETE"><div class="gallery-shell"><div class="gallery-header"><span>KRYGINA — CONCRETE <span style="color:#a99176">/ CONCEPT CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/krygina-concrete/1.png" alt="KRYGINA CONCRETE — кадр рекламной кампании"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('krygina-lightbox'),open=document.querySelector('[data-still-project="krygina"] .still-project-open');if(!dialog||!open)return;
 const images=['1.png','2.png','3.jpg','5.jpg','4.jpg'].map(name=>'portfolio/krygina-concrete/'+name);
@@ -1326,7 +1336,7 @@ dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(index-1);if(e.
 let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{if(startX===null)return;const d=e.changedTouches[0].clientX-startX;if(Math.abs(d)>45)show(index+(d<0?1:-1));startX=null},{passive:true});
 })();
 </script>
-<dialog id="befree-lightbox" aria-label="Фотопроект BEFREE SILVER"><div class="gallery-shell"><div class="gallery-header"><span>BEFREE — SILVER <span style="color:#a99176">/ FASHION EDITORIAL</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/befree-silver/1.jpg" alt="BEFREE SILVER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КОНЦЕПТУАЛЬНАЯ FASHION-КАМПАНИЯ</div></div></dialog>
+<dialog id="befree-lightbox" aria-label="Фотопроект BEFREE SILVER"><div class="gallery-shell"><div class="gallery-header"><span>BEFREE — SILVER <span style="color:#a99176">/ FASHION EDITORIAL</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/befree-silver/1.jpg" alt="BEFREE SILVER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КОНЦЕПТУАЛЬНАЯ FASHION-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('befree-lightbox'),open=document.querySelector('[data-still-project="befree"] .still-project-open');if(!dialog||!open)return;
 const images=Array.from({length:7},(_,i)=>'portfolio/befree-silver/'+(i+1)+'.jpg');
@@ -1342,7 +1352,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpeg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
+<dialog id="diamond-lightbox" aria-label="Фотопроект DIAMOND LIGHT STUDY"><div class="gallery-shell"><div class="gallery-header"><span>DIAMOND — LIGHT STUDY <span style="color:#a99176">/ JEWELRY CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/diamond-light-study/1.jpeg" alt="DIAMOND LIGHT STUDY — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ ЮВЕЛИРНАЯ КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('diamond-lightbox'),card=document.querySelector('[data-still-project="diamond"]'),open=card?.querySelector('.still-project-open');if(!dialog||!open)return;
 const images=['1.jpeg','2.png','3.jpeg','4.jpeg','5.jpeg','6.jpeg'].map(name=>'portfolio/diamond-light-study/'+name);
@@ -1359,7 +1369,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="loreal-lightbox" aria-label="Фотопроект L’ORÉAL PEARL PORTRAIT"><div class="gallery-shell"><div class="gallery-header"><span>L’ORÉAL — PEARL PORTRAIT <span style="color:#a99176">/ UNCOMMISSIONED CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/loreal-pearl-portrait/1.png" alt="L’ORÉAL — PEARL PORTRAIT, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · НЕОФИЦИАЛЬНАЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
+<dialog id="loreal-lightbox" aria-label="Фотопроект L’ORÉAL PEARL PORTRAIT"><div class="gallery-shell"><div class="gallery-header"><span>L’ORÉAL — PEARL PORTRAIT <span style="color:#a99176">/ UNCOMMISSIONED CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/loreal-pearl-portrait/1.png" alt="L’ORÉAL — PEARL PORTRAIT, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · НЕОФИЦИАЛЬНАЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('loreal-lightbox'),open=document.querySelector('[data-still-project="loreal"] .still-project-open');if(!dialog||!open)return;
 const images=['1.png','2.png','3.png','4.png','5.png','6.png'].map(name=>'portfolio/loreal-pearl-portrait/'+name);
@@ -1375,7 +1385,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="miralu-lightbox" aria-label="Каталог украшений MIRALU"><div class="gallery-shell"><div class="gallery-header"><span>MIRALU — JEWELRY <span style="color:#a99176">/ PRODUCT CATALOG</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/miralu-jewelry/1.jpg" alt="MIRALU — каталог украшений, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КАТАЛОГ УКРАШЕНИЙ MIRALU</div></div></dialog>
+<dialog id="miralu-lightbox" aria-label="Каталог украшений MIRALU"><div class="gallery-shell"><div class="gallery-header"><span>MIRALU — JEWELRY <span style="color:#a99176">/ PRODUCT CATALOG</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/miralu-jewelry/1.jpg" alt="MIRALU — каталог украшений, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КАТАЛОГ УКРАШЕНИЙ MIRALU</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('miralu-lightbox'),open=document.querySelector('[data-still-project="miralu"] .still-project-open');if(!dialog||!open)return;
 const images=['1.jpg','2.jpg','3.jpg','4.jpg','5.png','6.png'].map(name=>'portfolio/miralu-jewelry/'+name);
@@ -1391,7 +1401,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="jagermeister-lightbox" aria-label="Фотопроект JÄGERMEISTER THE SPIRIT OF 56"><div class="gallery-shell"><div class="gallery-header"><span>JÄGERMEISTER — THE SPIRIT OF 56 <span style="color:#a99176">/ BOTANICAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/jagermeister-spirit-of-56/1.png" alt="JÄGERMEISTER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
+<dialog id="jagermeister-lightbox" aria-label="Фотопроект JÄGERMEISTER THE SPIRIT OF 56"><div class="gallery-shell"><div class="gallery-header"><span>JÄGERMEISTER — THE SPIRIT OF 56 <span style="color:#a99176">/ BOTANICAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/jagermeister-spirit-of-56/1.png" alt="JÄGERMEISTER — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОНЦЕПТУАЛЬНАЯ AI-КАМПАНИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('jagermeister-lightbox'),open=document.querySelector('[data-still-project="jagermeister"] .still-project-open');if(!dialog||!open)return;
 const images=['1.png','2.png','3.jpg','4.jpeg','5.png','6.jpg'].map(name=>'portfolio/jagermeister-spirit-of-56/'+name);
@@ -1408,7 +1418,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 </script>
 
 
-<dialog id="sakhalin-lightbox" aria-label="Фотопроект САХАЛИН PAPER CUT ANIMATION"><div class="gallery-shell"><div class="gallery-header"><span>САХАЛИН — PAPER CUT ANIMATION <span style="color:#a99176">/ RESTAURANT ANIMATION</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sakhalin-paper-animation/1.png" alt="САХАЛИН — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КАДРЫ ИЗ АНИМАЦИОННОГО РОЛИКА</div></div></dialog>
+<dialog id="sakhalin-lightbox" aria-label="Фотопроект САХАЛИН PAPER CUT ANIMATION"><div class="gallery-shell"><div class="gallery-header"><span>САХАЛИН — PAPER CUT ANIMATION <span style="color:#a99176">/ RESTAURANT ANIMATION</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sakhalin-paper-animation/1.png" alt="САХАЛИН — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 07</span> · КАДРЫ ИЗ АНИМАЦИОННОГО РОЛИКА</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('sakhalin-lightbox'),open=document.querySelector('[data-still-project="sakhalin"] .still-project-open');if(!dialog||!open)return;
 const images=Array.from({length:7},(_,i)=>'portfolio/sakhalin-paper-animation/'+(i+1)+'.png');
@@ -1425,7 +1435,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 </script>
 
 
-<dialog id="ecommerce-lightbox" aria-label="Фотопроект FASHION E-COMMERCE"><div class="gallery-shell"><div class="gallery-header"><span>FASHION — E-COMMERCE <span style="color:#a99176">/ COMMERCIAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/fashion-ecommerce/1.jpg" alt="FASHION — E-COMMERCE, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОММЕРЧЕСКАЯ СЪЁМКА ДЛЯ МАРКЕТПЛЕЙСА</div></div></dialog>
+<dialog id="ecommerce-lightbox" aria-label="Фотопроект FASHION E-COMMERCE"><div class="gallery-shell"><div class="gallery-header"><span>FASHION — E-COMMERCE <span style="color:#a99176">/ COMMERCIAL CAMPAIGN</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/fashion-ecommerce/1.jpg" alt="FASHION — E-COMMERCE, кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 06</span> · КОММЕРЧЕСКАЯ СЪЁМКА ДЛЯ МАРКЕТПЛЕЙСА</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('ecommerce-lightbox'),open=document.querySelector('[data-still-project="ecommerce"] .still-project-open');if(!dialog||!open)return;
 const images=['1.jpg','2.jpg','4.jpg','5.jpg','6.png','8.jpg'].map(name=>'portfolio/fashion-ecommerce/'+name);
@@ -1441,7 +1451,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею">×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
+<dialog id="sunlight-lightbox" aria-label="Фотопроект SUNLIGHT FESTIVE COLLECTION"><div class="gallery-shell"><div class="gallery-header"><span>SUNLIGHT — FESTIVE COLLECTION <span style="color:#a99176">/ HOLIDAY JEWELRY CONCEPT</span></span><button class="gallery-close" type="button" aria-label="Закрыть галерею" autofocus>×</button></div><div class="gallery-stage"><button class="gallery-nav" type="button" data-gallery-prev aria-label="Предыдущее фото">←</button><img class="gallery-image" src="portfolio/sunlight-festive-collection/5.png" alt="SUNLIGHT FESTIVE COLLECTION — кадр 1"><button class="gallery-nav" type="button" data-gallery-next aria-label="Следующее фото">→</button></div><div class="gallery-footer"><span data-gallery-counter>01 / 05</span> · НЕОФИЦИАЛЬНАЯ НОВОГОДНЯЯ AI-КОНЦЕПЦИЯ</div></div></dialog>
 <script>
 (()=>{const dialog=document.getElementById('sunlight-lightbox'),open=document.querySelector('[data-still-project="sunlight"] .still-project-open');if(!dialog||!open)return;
 const images=['5.png','2.png','3.png','4.png','1.png'].map(name=>'portfolio/sunlight-festive-collection/'+name);
@@ -1457,7 +1467,7 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
 })();
 </script>
 
-<!-- Restore page scroll after closing any photo gallery -->
+<!-- Preserve the viewport and scroll position for all photo galleries -->
 <script>
 (()=>{
   const galleries=[
@@ -1471,25 +1481,42 @@ let startX=null;img.addEventListener('touchstart',e=>{startX=e.touches[0].client
     ['ecommerce','ecommerce-lightbox'],
     ['sunlight','sunlight-lightbox']
   ];
+  const html=document.documentElement;
   galleries.forEach(([project,id])=>{
     const dialog=document.getElementById(id);
     const trigger=document.querySelector('[data-still-project="'+project+'"] .still-project-open');
     if(!dialog||!trigger)return;
-    let previousX=0,previousY=0;
+    let position=null;
+    const restore=()=>{
+      if(position)window.scrollTo(position.x,position.y);
+    };
     trigger.addEventListener('click',()=>{
-      previousX=window.scrollX;
-      previousY=window.scrollY;
+      position={x:window.scrollX,y:window.scrollY};
+      html.classList.add('photo-gallery-open');
     },{capture:true});
+    trigger.addEventListener('click',()=>{
+      if(!dialog.open){
+        html.classList.remove('photo-gallery-open');
+        position=null;
+        return;
+      }
+      restore();
+      requestAnimationFrame(()=>{if(dialog.open)restore()});
+    });
     dialog.addEventListener('close',()=>{
-      const html=document.documentElement;
       const previousBehavior=html.style.scrollBehavior;
       html.style.scrollBehavior='auto';
-      window.scrollTo(previousX,previousY);
+      html.classList.remove('photo-gallery-open');
+      try{trigger.focus({preventScroll:true})}catch{}
+      restore();
       requestAnimationFrame(()=>{
-        window.scrollTo(previousX,previousY);
+        if(dialog.open)return;
+        restore();
         requestAnimationFrame(()=>{
-          window.scrollTo(previousX,previousY);
+          if(dialog.open)return;
+          restore();
           html.style.scrollBehavior=previousBehavior;
+          position=null;
         });
       });
     });
