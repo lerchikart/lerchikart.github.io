@@ -956,6 +956,21 @@ dialog[id$="-lightbox"] {
 }
 html.photo-gallery-open { overflow:hidden; overscroll-behavior:none; scroll-behavior:auto !important; }
 dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
+
+/* About: compact editorial portrait with natural text wrapping on mobile. */
+#about .creator-portrait-inline { display:none; }
+@media(max-width:760px) {
+  #about .creator-grid { display:block; }
+  #about .creator-copy { display:flow-root; }
+  #about .creator-portrait-desktop { display:none; }
+  #about .creator-portrait-inline {
+    display:block; float:left; width:42%; max-width:190px;
+    margin:6px 16px 8px 0; border-radius:12px; aspect-ratio:3 / 4;
+  }
+}
+@media(max-width:360px) {
+  #about .creator-portrait-inline { width:39%; margin-right:12px; }
+}
 </style>
 </head>
 <body>
@@ -1173,7 +1188,7 @@ dialog[id$="-lightbox"] .gallery-close { flex-shrink:0; }
 </div>
 <p class="pricing-note">Указана стартовая стоимость. Итоговый бюджет зависит от сложности, количества сцен, требований к деталям и объёма правок. Сложный липсинк, дополнительные версии, клипы и нестандартные проекты рассчитываются индивидуально.</p>
 </div></section>
-<section class="section content-section" id="about"><div class="container"><div class="section-tag">07 / THE CREATOR</div><div class="creator-grid"><div class="creator-copy"><h2 class="section-title display-heading">ЗА КАДРОМ — LERCHIKART.</h2><p>Меня зовут Валерия. Я AI-креатор и визуальный автор, работаю под творческим именем LERCHIKART.</p><p>Мой путь в визуальном искусстве начался с фотографии. Шесть лет работы с камерой научили меня видеть свет, композицию, эмоции и детали, из которых складывается сильный кадр.</p><p>Сегодня я переношу этот опыт в AI-продакшен — создаю рекламные фильмы, визуальные концепции и истории, в которых технологии становятся инструментом для воплощения идей.</p><p>Для меня важно не просто создать красивую картинку, а сделать визуал, у которого есть характер.</p></div><div class="creator-portrait"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div></div></div></section>
+<section class="section content-section" id="about"><div class="container"><div class="section-tag">07 / THE CREATOR</div><div class="creator-grid"><div class="creator-copy"><h2 class="section-title display-heading">ЗА КАДРОМ — LERCHIKART.</h2><div class="creator-portrait creator-portrait-inline"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div><p>Меня зовут Валерия. Я AI-креатор и визуальный автор, работаю под творческим именем LERCHIKART.</p><p>Мой путь в визуальном искусстве начался с фотографии. Шесть лет работы с камерой научили меня видеть свет, композицию, эмоции и детали, из которых складывается сильный кадр.</p><p>Сегодня я переношу этот опыт в AI-продакшен — создаю рекламные фильмы, визуальные концепции и истории, в которых технологии становятся инструментом для воплощения идей.</p><p>Для меня важно не просто создать красивую картинку, а сделать визуал, у которого есть характер.</p></div><div class="creator-portrait creator-portrait-desktop"><img src="assets/about/%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%20%D0%B2%20%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.png" alt="LERCHIKART — портрет Валерии" loading="lazy" decoding="async"></div></div></div></section>
 
   <dialog class="video-modal" id="videoModal" aria-label="Просмотр видео">
     <button type="button" class="modal-close" aria-label="Закрыть" autofocus>×</button>
